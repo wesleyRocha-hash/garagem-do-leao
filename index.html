@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ── Favicon ── -->
+    <link rel="icon" type="image/png" href="Logo_Circular.png">
+
+    <!-- ── SEO Otimizado ── -->
+    <meta name="description" content="CT Garagem do Leão - Muay Thai em São Paulo. Tradição tailandesa e garra brasileira com o professor Anderson Leão.">
+    <meta name="keywords" content="Muay Thai, Garagem do Leão, Artes Marciais, São Paulo, Vila Escolar, Professor Anderson Leão, Treino, Luta">
+    <meta name="author" content="Garagem do Leão">
+
+    <title>Garagem do Leão — Muay Thai</title>
+    
+    <!-- Scripts e Fontes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Shojumaru&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background: #050505; 
+            color: #d4d4d4; 
+            font-family: 'Teko', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ── Barra de Rolagem ── */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #cd7f32; border-radius: 2px; }
+
+        .font-shojumaru { font-family: 'Shojumaru', serif; }
+        .font-teko { font-family: 'Teko', sans-serif; }
+
+        /* ── Hero (Capa): Bloqueia visualmente o fundo ── */
+        .hero {
+            height: 100vh;
+            background: #050505 url('Capa_site.png') center center / cover no-repeat;
+            position: relative;
+            z-index: 30; 
+        }
+        @media (max-width: 768px) {
+            .hero { background-size: contain; }
+        }
+
+        /* ── Elementos de Fundo (z-index 0) ── */
+        .side-img {
+            position: fixed;
+            top: 0;
+            height: 100vh;
+            width: clamp(150px, 20vw, 280px);
+            z-index: 0; 
+            pointer-events: none;
+            object-fit: cover;
+            opacity: 0.65; 
+        }
+        .side-left {
+            left: 0;
+            transform: scaleX(-1);
+            mask-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 100%);
+        }
+        .side-right {
+            right: 0;
+            mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 100%);
+        }
+        @media (max-width: 1023px) { .side-img { display: none; } }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70vw; 
+            opacity: 0.12; 
+            z-index: 0; 
+            pointer-events: none;
+        }
+        @media (max-width: 768px) { .watermark { width: 130vw; } }
+
+        /* ── Camadas de Efeito ── */
+        .vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 50; 
+            background: radial-gradient(ellipse 70% 60% at center, transparent 50%, #050505 100%);
+        }
+
+        /* ── Botão de Som Inteligente ── */
+        #audioBtn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            background: rgba(205, 127, 50, 0.08); 
+            border: 1px solid rgba(205, 127, 50, 0.2);
+            backdrop-filter: blur(4px);
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        #audioBtn.visible { opacity: 0.7; transform: translateY(0); pointer-events: auto; }
+        #audioBtn:hover { opacity: 1; background: rgba(205, 127, 50, 0.2); }
+        
+        #audioBtn.playing { animation: pulse 2s infinite; }
+
+        /* Ajuste específico para Celular: Sempre visível */
+        @media (max-width: 768px) {
+            #audioBtn {
+                opacity: 0.7 !important;
+                transform: translateY(0) !important;
+                pointer-events: auto !important;
+            }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(205, 127, 50, 0.2); }
+            70% { box-shadow: 0 0 0 15px rgba(205, 127, 50, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(205, 127, 50, 0); }
+        }
+
+        /* ── Estrutura 3D ── */
+        .perspective-wrapper { perspective: 1200px; perspective-origin: center; }
+        .scroll-item {
+            transform-style: preserve-3d;
+            will-change: transform, opacity;
+            transition: transform 0.1s linear, opacity 0.1s linear;
+        }
+
+        /* ── Social Icons ── */
+        .social-icon { transition: color 0.3s ease, transform 0.3s ease; color: #8c8c8c; }
+        .social-icon:hover { transform: scale(1.15); }
+        .social-icon.instagram:hover { color: #E1306C; }
+        .social-icon.whatsapp:hover { color: #25D366; }
+
+        .bronze-line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, #cd7f32, transparent); }
+
+        .scroll-arrow {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 2.4s infinite;
+            z-index: 40;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: .6; }
+            50% { transform: translateX(-50%) translateY(12px); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fundo Fixo (Z-0) -->
+    <img src="Marca d'agua.png" alt="" class="watermark" aria-hidden="true">
+    <img src="Lateral_Direita_site.png" alt="" class="side-img side-left">
+    <img src="Lateral_Direita_site.png" alt="" class="side-img side-right">
+    <div class="vignette"></div>
+
+    <!-- Botão de Som -->
+    <button id="audioBtn" title="Controlo de Som">
+        <svg id="speakerIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#cd7f32" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path id="waves" d="M15.54 8.46a5 5 0 0 1 0 7.07" style="display:none;"></path>
+            <path id="waves-outer" d="M19.07 4.93a10 10 0 0 1 0 14.14" style="display:none;"></path>
+            <line id="muteLine" x1="23" y1="9" x2="17" y2="15"></line>
+            <line id="muteLine2" x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+    </button>
+    <audio id="bgMusic" autoplay loop preload="auto">
+        <source src="Trilha_Garagem.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ── Capa (Hero) ── -->
+    <section class="hero">
+        <a href="#content" class="scroll-arrow">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#cd7f32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </a>
+    </section>
+
+    <!-- ── Conteúdo 3D ── -->
+    <div id="content" class="perspective-wrapper relative z-10">
+        <div class="h-[25vh]"></div>
+
+        <div class="scroll-item max-w-2xl mx-auto px-6 mb-48">
+            <div class="text-center mb-12">
+                <h2 class="font-shojumaru text-3xl md:text-4xl text-white mb-4 tracking-widest">Sobre nós</h2>
+                <div class="bronze-line mx-auto"></div>
+            </div>
+            <p class="font-teko text-xl md:text-2xl leading-relaxed text-gray-300 text-center font-light tracking-wide">
+                Aqui, o Muay Thai é levado a sério. Sob o comando do professor Anderson Leão, que traz na bagagem mais de 20 anos de experiência e vivência real nas artes marciais, o nosso CT é muito mais do que um espaço para suar a camisa. É um ambiente onde a tradição tailandesa encontra a garra brasileira.<br><br>
+                Não importa se você está pisando no tatame pela primeira vez em busca de saúde e disciplina, ou se já é um atleta querendo afiar suas armas para o ringue. O que conta é a sua dedicação, o caráter e a vontade de se superar a cada round.
+            </p>
+        </div>
+
+        <div class="scroll-item max-w-2xl mx-auto px-6 mb-40 text-center">
+            <h2 class="font-shojumaru text-2xl md:text-3xl text-white mb-4">Onde nos encontrar</h2>
+            <div class="bronze-line mx-auto mb-10"></div>
+            <p class="font-teko text-gray-300 text-lg mb-10 tracking-widest">
+                Rua Maria Lazzari, Nº 33,<br>
+                08140-170 Vila Escolar, São Paulo-SP
+            </p>
+            <div class="rounded overflow-hidden shadow-2xl border border-white/5">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.748769556834!2d-46.3997045!3d-23.505556900000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce6500156ae969%3A0x7f4c36b7e8d84b67!2sGaragem%20do%20le%C3%A3o!5e0!3m2!1spt-BR!2sbr" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- Rodapé Social -->
+        <div class="scroll-item pb-40">
+            <div class="flex justify-center gap-12 mb-10">
+                <a href="https://www.instagram.com/garagemleao/" target="_blank" class="social-icon instagram" aria-label="Instagram">
+                    <svg width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.036 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                    </svg>
+                </a>
+                <a href="https://wa.me/5511963029532" target="_blank" class="social-icon whatsapp" aria-label="WhatsApp">
+                    <svg width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c-.003 1.396.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                    </svg>
+                </a>
+            </div>
+            <p class="font-shojumaru text-center text-xs tracking-[0.35em] text-neutral-500">GARAGEM DO LEÃO - 2026</p>
+        </div>
+    </div>
+
+    <!-- ── Lógica de Áudio e Interface ── -->
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const audioBtn = document.getElementById('audioBtn');
+        const muteLine = document.getElementById('muteLine');
+        const muteLine2 = document.getElementById('muteLine2');
+        const waves = document.getElementById('waves');
+        const wavesOuter = document.getElementById('waves-outer');
+
+        // Atualização Visual do Botão
+        function updateAudioUI(isPlaying) {
+            if (isPlaying) {
+                audioBtn.classList.add('playing');
+                muteLine.style.display = 'none';
+                muteLine2.style.display = 'none';
+                waves.style.display = 'block';
+                wavesOuter.style.display = 'block';
+            } else {
+                audioBtn.classList.remove('playing');
+                muteLine.style.display = 'block';
+                muteLine2.style.display = 'block';
+                waves.style.display = 'none';
+                wavesOuter.style.display = 'none';
+            }
+        }
+
+        // Tentativa de Autoplay (Tratamento de Erros)
+        window.addEventListener('load', () => {
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    updateAudioUI(true);
+                }).catch(() => {
+                    // Autoplay bloqueado pelo navegador
+                    updateAudioUI(false);
+                });
+            }
+        });
+
+        // Controlo Manual
+        audioBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                updateAudioUI(true);
+            } else {
+                audio.pause();
+                updateAudioUI(false);
+            }
+        });
+
+        // Visibilidade do Botão no Scroll (Apenas para Desktop)
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 250) {
+                audioBtn.classList.add('visible');
+            } else {
+                audioBtn.classList.remove('visible');
+            }
+        });
+
+        // 3D Scroll
+        const items = document.querySelectorAll('.scroll-item');
+        const vh = window.innerHeight;
+        function updateScroll() {
+            items.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const center = rect.top + rect.height / 2;
+                const offset = (center - vh / 2) / (vh / 2);
+                const clamped = Math.max(-1, Math.min(1, offset));
+                const abs = Math.abs(clamped);
+                el.style.transform = `rotateX(${clamped * 6}deg) translateZ(${-abs * 800}px)`;
+                el.style.opacity = Math.max(0, 1 - abs * 0.85);
+            });
+            requestAnimationFrame(updateScroll);
+        }
+        requestAnimationFrame(updateScroll);
+    </script>
+</body>
+</html>
