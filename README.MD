@@ -44,10 +44,4 @@ Desenvolvido inteiramente em JavaScript Vanilla e CSS 3D Transforms. Os elemento
     ├── Lateral_Direita_site.jpg  # Silhueta lateral direita do lutador
     └── Trilha_Garagem.mp3        # Trilha sonora ambiente (Muay Thai rhythm)
 
-🦁 Créditos
-CT Garagem do Leão.
 
-Estudo de Caso & Desenvolvimento: Criado como um projeto de portefólio.
----
-
-## Visite o site: https://garagem-do-leao.netlify.app/
