@@ -1,4 +1,4 @@
-# 🦁 Garagem do Leão — Muay Thai Landing Page
+#🦁 Garagem do Leão — Muay Thai Landing Page
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -9,17 +9,17 @@ Uma landing page imersiva de alta fidelidade desenvolvida para o centro de trein
 
 ---
 
-## 💎 Funcionalidades e Diferenciais Técnicos
+##💎 Funcionalidades e Diferenciais Técnicos
 
-### 1. Motor de Scroll 3D (Cylinder Effect)
+###1. Motor de Scroll 3D (Cylinder Effect)
 Desenvolvido inteiramente em JavaScript Vanilla e CSS 3D Transforms. Os elementos de texto e mapa não apenas deslizam verticalmente; eles rotacionam num eixo de profundidade (`translateZ` e `rotateX`), simulando um cilindro virtual. Esta técnica proporciona uma transição suave e um forte apelo visual (UX).
 
-### 2. Design Visual "Premium Dark"
+###2. Design Visual "Premium Dark"
 * **Paleta Imersiva:** Cores baseadas em preto profundo (`#050505`) e bronze metálico (`#cd7f32`).
 * **Camadas de Profundidade:** Utilização de imagens laterais fixas (`z-index: 0`) e marcas d'água dinâmicas como papel de parede, revelando-se suavemente à medida que a secção principal (Hero) sobe.
 * **Capa Inteligente:** A imagem de capa principal funciona como um bloqueador físico para a marca d'água no início do carregamento, limpando a confusão visual inicial.
 
-### 3. Engenharia de Áudio Inteligente (Autoplay Adaptativo)
+###3. Engenharia de Áudio Inteligente (Autoplay Adaptativo)
 * O site tenta iniciar a trilha sonora (`Trilha_Garagem.mp3`) de forma autónoma através de uma promessa assíncrona.
 * Caso as políticas de segurança do navegador bloqueiem a reprodução automática sem interação prévia (autoplay policy), o código trata o erro silenciosamente sem quebrar a execução do site.
 * Um botão flutuante e transparente de áudio surge dinamicamente no ecrã após 250px de scroll (ou fixa-se de forma permanente em telemóveis) com animações de "pulso" e ondas sonoras em bronze para permitir o controlo manual do utilizador.
